@@ -1,0 +1,270 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+
+    <div class="row p-2">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title d-flex align-items-start justify-content-between">
+                        <div class="avatar flex-shrink-0">
+                            <img
+                                    src="../assets/img/icons/unicons/chart-success.png"
+                                    alt="chart success"
+                                    class="rounded"
+                            />
+                        </div>
+                        <div class="dropdown">
+                            <button
+                                    class="btn p-0"
+                                    type="button"
+                                    id="cardOpt3"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                            >
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
+                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="fw-semibold d-block mb-1">Profit</span>
+                    <h3 class="card-title mb-2">$12,628</h3>
+                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card p-1">
+                <div class="card-body">
+                    <div class="card-title d-flex align-items-start justify-content-between">
+                        <div class="avatar flex-shrink-0">
+                            <img
+                                    src="../assets/img/icons/unicons/wallet-info.png"
+                                    alt="Credit Card"
+                                    class="rounded"
+                            />
+                        </div>
+                        <div class="dropdown">
+                            <button
+                                    class="btn p-0"
+                                    type="button"
+                                    id="cardOpt6"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                            >
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
+                                <a class="dropdown-item">View More</a>
+                                <a class="dropdown-item">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <span>Sales</span>
+                    <h3 class="card-title text-nowrap mb-1">$4,679</h3>
+                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title d-flex align-items-start justify-content-between">
+                        <div class="avatar flex-shrink-0">
+                            <img src="../assets/img/icons/unicons/paypal.png" alt="Credit Card" class="rounded"/>
+                        </div>
+                        <div class="dropdown">
+                            <button
+                                    class="btn p-0"
+                                    type="button"
+                                    id="cardOpt4"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                            >
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt4">
+                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="d-block mb-1">Payments</span>
+                    <h3 class="card-title text-nowrap mb-2">$2,456</h3>
+                    <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i> -14.82%</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title d-flex align-items-start justify-content-between">
+                        <div class="avatar flex-shrink-0">
+                            <img src="../assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded"/>
+                        </div>
+                        <div class="dropdown">
+                            <button
+                                    class="btn p-0"
+                                    type="button"
+                                    id="cardOpt1"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                            >
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="cardOpt1">
+                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="fw-semibold d-block mb-1">Transactions</span>
+                    <h3 class="card-title mb-2">$14,857</h3>
+                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mb-2">
+
+        <div class="col-lg-8 mb-4 p-3">
+            <div class="card">
+                <div class="card-header title">
+                    <h5 class="card-title">Expédition/Réceptions</h5>
+                </div>
+                <div class="card-body">
+                    <p-chart type="line" [data]="lineChartData" [options]="lineChartOptions"
+                             class="w-100 h-100"></p-chart>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 p-3">
+            <div class="card">
+                <div class="card-header title">
+                    <h5 class="card-title">Produits</h5>
+                </div>
+                <div class="card-body">
+                    <p-chart type="pie" [data]="data" [options]="options"></p-chart>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <div>
+                        <p>Total</p>
+                    </div>
+                    <div>
+                        <p>40</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ml-4">
+        <div class="col-lg-4 mb-4 p-4">
+            <div class="card">
+                <div class="card-header title">
+                    <h5 class="card-title">Commandes/Clients</h5>
+                </div>
+                <div class="card-body">
+                    <p-chart type="doughnut" [data]="data2" [options]="options2"/>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <div>
+                        <p>Total</p>
+                    </div>
+                    <div>
+                        <p>60</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4 p-4">
+        </div>
+
+
+        <div class="col-lg-4 mb-4 p-4">
+            <div class="card">
+                <div class="card-header title">
+                    <h5 class="card-title">Commandes/Fournisseurs</h5>
+                </div>
+                <div class="card-body">
+                    <p-chart type="doughnut" [data]="data3" [options]="options3"/>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <div>
+                        <p>Total</p>
+                    </div>
+                    <div>
+                        <p>100</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row ml-4">
+        <div class="col-lg-7 mb-4 p-4">
+
+            <div class="card">
+                <div class="card-header title">
+                    <h5 class="card-title">Montant Factures</h5>
+                </div>
+                <div class="card-body ">
+                    <p-chart type="bar" [data]="basicData" [options]="basicOptions"/>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-5 mb-4 p-4">
+
+
+            <div class="card">
+                <div class="card-header title">
+                    <h5>Derniers commandes</h5>
+                </div>
+                <div class="card-body ">
+                    <p-table [value]="commandesClient" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Numéro</th>
+                                <th pSortableColumn="client">Client
+                                    <p-sortIcon field="client"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="dateCommande">Date
+                                    <p-sortIcon field="dateCommande"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="commandeCLientStatus">Status
+                                    <p-sortIcon field="commandeCLientStatus"></p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-commandesClient>
+                            <tr>
+                                <td style="width: 15%; min-width: 5rem;">{{ commandesClient.numero }}"</td>
+                                <td style="width: 35%; min-width: 7rem;">{{ commandesClient.client.nom }}</td>
+                                <td style="width: 35%; min-width: 8rem;">{{ commandesClient.dateCommande | currency:'USD' }}</td>
+                                <td style="width: 35%; min-width: 8rem;">{{ commandesClient.commandeClientStatus.nom | currency:'USD' }}</td>
+
+                                <td style="width: 15%;">
+                                    <button pButton pRipple type="button" icon="pi pi-search"
+                                            class="p-button p-component p-button-text p-button-icon-only"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

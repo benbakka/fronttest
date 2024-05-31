@@ -1,0 +1,137 @@
+<div class="container-lg">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Commande Details</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex justify-content-end align-items-center search-box">
+                            <div class="col-md-auto">
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#smallModal">Ajouter Commandes</button>
+                            </div>
+                            <input type="text" id="search" class="form-control search-input" placeholder="Search by Name" [(ngModel)]="searchText" > 
+                            <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            <a (click)="reverseCommandes()" title="Reverse Order">
+                                <i class="material-icons">{{ isReversed ? 'arrow_downward' : 'arrow_upward' }}</i>
+                            </a>
+                        </th>
+                        <th style="width: 140px;">Produit</th>
+                        <th>Quantité</th>
+                        <th>Commande Client</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let commande of pagedCommandes">
+                        <td>{{ commande.id }}</td>
+                        <td>{{ commande.produit.nom }}</td>
+                        <td>{{ commande.quantite }}</td>
+                        <td>{{ commande.commande }}</td>
+                        <td>
+                            <a title="Edit" (click)="onSelect(commande)" class="edit" data-bs-toggle="modal" data-bs-target="#editModal"><i class="material-icons">&#xE254;</i></a>
+                            <a (click)="deleteCommande(commande)" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" aria-label="Previous" (click)="previousPage()">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li *ngFor="let page of displayedPages" class="page-item" [class.active]="page === currentPage">
+            <a class="page-link" (click)="setPage(page)">{{ page }}</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" aria-label="Next" (click)="nextPage()">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="modal fade" id="smallModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLabel3">Ajouter Commande details</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="produit">Produit:</label>
+                        <select id="produit" name="produit" class="form-select" required [(ngModel)]="newCommandeItem.produit.reference">
+                            <option *ngFor="let produit of produits" [ngValue]="produit.reference">{{ produit.reference }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantite">Nemuro</label>
+                        <input type="text" id="quantite" name="numero" class="form-control" required [(ngModel)]="newCommandeItem.numero">
+                    </div>
+                    <div class="form-group">
+                        <label for="quantite">Quantité</label>
+                        <input type="number" id="quantite" name="quantite" class="form-control" required [(ngModel)]="newCommandeItem.quantite">
+                    </div>
+                    <div class="form-group">
+                        <label for="commandeClient">Commande Client:</label>
+                        <select id="commandeClient" name="commandeClient" class="form-select" required [(ngModel)]="newCommandeItem.commande">
+                            <option *ngFor="let commande of commandes" [ngValue]="commande.numero">{{ commande.numero }}</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" (click)="CreateCommande()" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true" *ngIf="selectedCommandeItem">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Modifier Fornisseur</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="produit">Produit:</label>
+                        <select id="produit" name="produit" class="form-select" required [(ngModel)]="selectedCommandeItem.produit">
+                            <option *ngFor="let produit of produits" [value]="produit.id">{{ produit.nom }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantite">Quantité</label>
+                        <input type="number" id="quantite" name="quantite" class="form-control" required [(ngModel)]="selectedCommandeItem.quantite">
+                    </div>
+                    <div class="form-group">
+                        <label for="commandeClient">Commande Client:</label>
+                        <select id="commandeClient" name="commandeClient" class="form-select" required [(ngModel)]="selectedCommandeItem.commande">
+                            <option *ngFor="let commande of commandes" [value]="commande.id">{{ commande.numero }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="updateCommande()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

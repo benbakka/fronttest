@@ -1,0 +1,205 @@
+<div class="container-lg">
+
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h2>Fournisseur Details</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex justify-content-end align-items-center search-box">
+                            <div class="col-md-auto">
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
+                                    data-bs-target="#smallModal">Ajouter Fornisseur</button>
+                            </div>
+
+                            <input type="text" id="search" class="form-control search-input"
+                                placeholder="Search by Name" [(ngModel)]="searchText" (input)="filterFournisseurs()">
+                            <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                <table class="table  table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;">
+                                <a (click)="reverseFournisseurs()" title="Reverse Order">
+                                    <i class="material-icons">{{ isReversed ? 'arrow_downward' : 'arrow_upward' }}</i>
+                                </a>
+                            </th>
+                            <th style="width: 140px;">Nom</th>
+                            <th style="width: 140px;">Prénom</th>
+                            <th style="width: 120px;">Télephone</th>
+                            <th>Email</th>
+                            <th>Adresse</th>
+                            <th>Compte Bancaire</th>
+                            <th style="width: 160px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <ng-container *ngFor="let fournisseur of pagedFournisseurs">
+                            <tr>
+                                <td>{{ fournisseur.id }}</td>
+                                <td>{{ fournisseur.nom }}</td>
+                                <td>{{ fournisseur.prenom }}</td>
+                                <td>{{ fournisseur.tel }}</td>
+                                <td>{{ fournisseur.email }}</td>
+                                <td>{{ fournisseur.adresse }}</td>
+                                <td>{{ fournisseur.compteBancaire }}</td>
+
+                                <td>
+                                    <a title="Edit" (click)="onSelect(fournisseur)" class="edit" data-bs-toggle="modal"
+                                        (click)="onSelect(fournisseur)" data-bs-target="#editModal"><i
+                                            class="material-icons">&#xE254;</i></a>
+
+                                    <a (click)="deleteFournisseur(fournisseur)" class="delete" title="Delete"
+                                        data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <ul class="pagination">
+                <!-- Previous page navigation -->
+                <li class="page-item">
+                    <a class="page-link" aria-label="Previous" (click)="previousPage()">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <!-- Display nearby pages (e.g., previous two pages, current page, next two pages) -->
+                <ng-container *ngFor="let page of displayedPages">
+                    <li class="page-item" [class.active]="page === currentPage">
+                        <a class="page-link" (click)="setPage(page)">{{ page }}</a>
+                    </li>
+                </ng-container>
+
+                <!-- Next page navigation -->
+                <li class="page-item">
+                    <a class="page-link" aria-label="Next" (click)="nextPage()">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="smallModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLabel3">Ajouter Fornisseur</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form inside the modal -->
+                    <div class="form-group">
+                        <label for="nom">Nom:</label>
+                        <input type="text" id="nom" name="nom" required [(ngModel)]="newFournisseur.nom">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prenom">Prénom:</label>
+                        <input type="text" id="prenom" name="prenom" required [(ngModel)]="newFournisseur.prenom">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tel">Téléphone:</label>
+                        <input type="tel" id="tel" name="tel" required [(ngModel)]="newFournisseur.tel">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required [(ngModel)]="newFournisseur.email">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Adresse:</label>
+                        <input type="email" id="adresse" name="adresse" required [(ngModel)]="newFournisseur.adresse">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Compte Bancaire:</label>
+                        <input type="email" id="compteBancaire" name="compteBancaire" required
+                            [(ngModel)]="newFournisseur.compteBancaire">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" (click)="CreateFournisseur()" class="btn btn-primary"
+                        data-bs-dismiss="modal">Save</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Edit Client Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true" *ngIf="selectedFournisseur">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Modifier Fornisseur</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="edit-nom" class="col-sm-2 col-form-label">Nom:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="edit-nom" name="edit-nom" class="form-control"
+                                [(ngModel)]="selectedFournisseur.nom">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit-prenom" class="col-sm-2 col-form-label">Prénom:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="edit-prenom" name="edit-prenom" class="form-control"
+                                [(ngModel)]="selectedFournisseur.prenom">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit-tel" class="col-sm-2 col-form-label">Téléphone:</label>
+                        <div class="col-sm-9">
+                            <input type="tel" id="edit-tel" name="edit-tel" class="form-control"
+                                [(ngModel)]="selectedFournisseur.tel">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit-email" class="col-sm-2 col-form-label">Email:</label>
+                        <div class="col-sm-9">
+                            <input type="email" id="edit-email" name="edit-email" class="form-control"
+                                [(ngModel)]="selectedFournisseur.email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit-adresse" class="col-sm-2 col-form-label">Adresse:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="edit-adresse" name="edit-adresse" class="form-control"
+                                [(ngModel)]="selectedFournisseur.adresse">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit-adresse" class="col-sm-2 col-form-label">Compte Bancaire:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="edit-compteBancaire" name="edit-compteBancaire" class="form-control"
+                                [(ngModel)]="selectedFournisseur.compteBancaire">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        (click)="updateFournisseur()">Save
+                        changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

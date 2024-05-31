@@ -1,0 +1,166 @@
+
+
+
+.table-wrapper {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.table-title {
+    color: #fff;
+    background: #40b2cd;      
+    padding: 16px 25px;
+    margin: -20px -25px 10px;
+    border-radius: 3px 3px 0 0;
+}
+
+.table-title h2 {
+    margin: 5px 0 0;
+    font-size: 24px;
+}
+
+.search-box {
+    position: relative;
+    float: right;
+}
+
+.search-box .input-group {
+    min-width: 300px;
+    position: absolute;
+    right: 0;
+}
+
+.search-box .input-group-addon, .search-box input {
+    border-color: #ddd;
+    border-radius: 0;
+}   
+
+.search-box input {
+    height: 34px;
+    padding-right: 35px;
+    background: #f4fcfd;
+    border: none;
+    border-radius: 2px !important;
+}
+
+.search-box input:focus {
+    background: #fff;
+}
+
+.search-box input::placeholder {
+    font-style: italic;
+}
+
+.search-box .input-group-addon {
+    min-width: 35px;
+    border: none;
+    background: transparent;
+    position: absolute;
+    right: 0;
+    z-index: 9;
+    padding: 6px 0;
+}
+
+.search-box i {
+    color: #a0a5b1;
+    font-size: 19px;
+    position: relative;
+    top: 2px;
+}
+
+table.table {
+    table-layout: fixed;
+    margin-top: 15px;
+}
+
+table.table tr th, table.table tr td {
+    border-color: #e9e9e9;
+}
+
+table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+table.table th:first-child {
+    width: 5%;
+}
+
+table.table th:nth-child(2) {
+    width: 22%;
+}
+
+table.table th:nth-child(3) {
+    width: 22%;
+}
+
+table.table th:last-child {
+    width: 15%;
+}
+
+table.table td a {
+    color: #a0a5b1;
+    display: inline-block;
+    margin: 0 5px;
+}
+
+table.table td a.edit {
+    color: #FFC107;
+}
+
+table.table td a.delete {
+    color: #E34724;
+}
+
+table.table td i {
+    font-size: 19px;
+}
+
+.Production-form {
+    max-width: 600px; /* Ajuster au besoin */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex; /* Afficher les éléments du formulaire en ligne */
+    flex-wrap: wrap; /* Permettre aux éléments de se replier à la ligne suivante */
+}
+
+.form-group {
+    margin-bottom: 20px;
+    flex: 0 0 50%; /* Chaque champ de formulaire prend 50% de la largeur disponible */
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="option"],
+input[type="select"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button.submit-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button.submit-btn:hover {
+    background-color: #0056b3;
+}

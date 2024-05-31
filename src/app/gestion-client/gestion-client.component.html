@@ -1,0 +1,205 @@
+<div class="container-lg">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h2>Client Details</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-end align-items-center search-box">
+                            <div class="col-md-auto"> <!-- Use auto column width -->
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
+                                    data-bs-target="#smallModal">Ajouter Client</button>
+                            </div>
+                            <input type="text" id="search" class="form-control search-input"
+                                placeholder="Search by Name" [(ngModel)]="searchText" (input)="filterClients()">
+                            <span class="input-group-addon search-icon">
+                                <i class="material-icons">&#xE8B6;</i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+            <table class="table  table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;">
+                            <a (click)="reverseClients()" title="Reverse Order">
+                                <i class="material-icons">{{ isReversed ? 'arrow_downward' :
+                                    'arrow_upward'}}</i>
+                            </a>
+                        </th>
+                        <th style="width: 140px;">Nom</th>
+                        <th style="width: 140px;">Prénom</th>
+                        <th style="width: 120px;">Télephone</th>
+                        <th>Email</th>
+                        <th>Adresse</th>
+                        <th style="width: 160px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <ng-container *ngFor="let client of pagedClients">
+                        <tr>
+                            <td>{{ client.id }}</td>
+                            <td>{{ client.nom }}</td>
+                            <td>{{ client.prenom }}</td>
+                            <td>{{ client.tel }}</td>
+                            <td>{{ client.email }}</td>
+                            <td>{{ client.adresse }}</td>
+
+                            <td>
+
+                                <a type="button" class="edit" data-bs-toggle="modal" (click)="onSelect(client)"
+                                    data-bs-target="#editModal">
+                                    <i class="material-icons">&#xE254;</i>
+                                </a>
+
+                                <a (click)="deleteClient(client)" class="delete" title="Delete" data-toggle="tooltip"><i
+                                        class="material-icons">&#xE872;</i></a>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <ul class="pagination">
+            <!-- Previous page navigation -->
+            <li class="page-item">
+                <a class="page-link" aria-label="Previous" (click)="previousPage()">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <!-- Display nearby pages (e.g., previous two pages, current page, next two pages) -->
+            <ng-container *ngFor="let page of displayedPages">
+                <li class="page-item" [class.active]="page === currentPage">
+                    <a class="page-link" (click)="setPage(page)">{{ page }}</a>
+                </li>
+            </ng-container>
+
+            <!-- Next page navigation -->
+            <li class="page-item">
+                <a class="page-link" aria-label="Next" (click)="nextPage()">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- </div> -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="smallModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel3">Ajouter Client</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form inside the modal -->
+                <div class="row mb-3">
+                    <label for="nom" class="col-sm-2 col-form-label">Nom:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="nom" name="nom" required [(ngModel)]="newClient.nom"
+                            class="form-control">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="prenom" class="col-sm-2 col-form-label">Prénom:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="prenom" name="prenom" required [(ngModel)]="newClient.prenom"
+                            class="form-control">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="tel" class="col-sm-2 col-form-label">Téléphone:</label>
+                    <div class="col-sm-9">
+                        <input type="tel" id="tel" name="tel" required [(ngModel)]="newClient.tel" class="form-control">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="email" class="col-sm-2 col-form-label">Email:</label>
+                    <div class="col-sm-9">
+                        <input type="email" id="email" name="email" required [(ngModel)]="newClient.email"
+                            class="form-control">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="adresse" class="col-sm-2 col-form-label">Adresse:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="adresse" name="adresse" required [(ngModel)]="newClient.adresse"
+                            class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" (click)="submitClientForm()" class="btn btn-primary"
+                    data-bs-dismiss="modal">Save</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Client Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true" *ngIf="selectedClient">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Modifier Client</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="edit-nom" class="col-sm-2 col-form-label">Nom:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="edit-nom" name="edit-nom" class="form-control"
+                            [(ngModel)]="selectedClient.nom">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="edit-prenom" class="col-sm-2 col-form-label">Prénom:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="edit-prenom" name="edit-prenom" class="form-control"
+                            [(ngModel)]="selectedClient.prenom">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="edit-tel" class="col-sm-2 col-form-label">Téléphone:</label>
+                    <div class="col-sm-9">
+                        <input type="tel" id="edit-tel" name="edit-tel" class="form-control"
+                            [(ngModel)]="selectedClient.tel">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="edit-email" class="col-sm-2 col-form-label">Email:</label>
+                    <div class="col-sm-9">
+                        <input type="email" id="edit-email" name="edit-email" class="form-control"
+                            [(ngModel)]="selectedClient.email">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="edit-adresse" class="col-sm-2 col-form-label">Adresse:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="edit-adresse" name="edit-adresse" class="form-control"
+                            [(ngModel)]="selectedClient.adresse">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="updateClient()">Save
+                    changes</button>
+            </div>
+        </div>
+    </div>
+</div>

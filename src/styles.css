@@ -1,0 +1,17 @@
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+.fixed-menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+}
+
+.layout-page {
+    margin-left: 250px;
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+}
