@@ -1,0 +1,19 @@
+/* /* Ensure the menu-toggle button changes the visibility of the submenu */
+.menu-toggle::after {
+    font-family: FontAwesome;
+    float: right;
+  }
+  
+  .menu-item.active > .menu-sub {
+    display: block;
+  }
+  
+  .menu-sub {
+    display: none;
+  }
+  
+  .menu-item.active > .menu-link::after {
+    font-family: FontAwesome;
+  }
+   
+

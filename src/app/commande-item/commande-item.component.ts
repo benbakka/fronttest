@@ -88,6 +88,16 @@ export class CommandeItemComponent {
     }
   }
 
+  UpdateItemCreateCommande(): void {
+    console.log()
+    this.commandeItemSercice.createCommande(this.newCommandeItem)
+      .subscribe(createdCommandeItem => {
+        this.commandeItems.push(createdCommandeItem);
+       this.newCommandeItem = new CommandeItem();
+        console.log("create",this.newCommandeItem );
+        this.updatePagination();
+      });
+  }
 
   CreateCommande(): void {
     console.log()
@@ -102,12 +112,12 @@ export class CommandeItemComponent {
 
 
   deleteCommande(commandeItem: CommandeItem): void {
-    this.commandeItemSercice.deleteCommande(commandeItem.id)
-      .subscribe(() => {
-        this.commandeItems = this.commandeItems.filter(c => c.id !== commandeItem.id);
-        // this.filterCommandes();
-        this.updatePagination();
-      });
+    // this.commandeItemSercice.deleteCommande(commandeItem.id)
+    //   .subscribe(() => {
+    //     this.commandeItems = this.commandeItems.filter(c => c.id !== commandeItem.id);
+    //     // this.filterCommandes();
+    //     this.updatePagination();
+    //   });
   }
 
   onSelect(commande: CommandeItem): void {

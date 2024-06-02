@@ -25,8 +25,8 @@ export class CommandeItemService {
     return this.http.put<CommandeItem>(url, commandeItem);
   }
 
-  deleteCommande(id: number): Observable<void> {
-    const url = `${this.apiUrl}/delete/${id}`;
+  deleteCommande(idCommandItem: number,idclient:any): Observable<void> {
+    const url = `${this.apiUrl}/delete/${idCommandItem}/commandeclient/${idclient}`;
     return this.http.delete<void>(url);
   }
 }

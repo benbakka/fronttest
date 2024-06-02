@@ -60,48 +60,49 @@
             <div class="menu-inner-shadow"></div>
 
 
-            <ul class="menu-inner py-1">
+            <ul class="menu-inner py-1" >
                 <!-- Dashboard -->
                 <li class="menu-item active">
-                    <a routerLink="/dashboard" routerLinkActive="active" class="menu-link">
+                    <a routerLink="/menu/dashboard" routerLinkActive="active" class="menu-link" (click)="toggleMenu($event)">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
                         <div data-i18n="Analytics">Dashboard</div>
                     </a>
                 </li>
                 <br>
                 <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle" >
-                        <i class="menu-icon tf-icons bx bx-layout"></i>
-                        <div data-i18n="Layouts">GESTION CLIENTS/FOURNISSEURS</div>
+                    <a href="javascript:void(0);" class="menu-link menu-toggle" (click)="toggleMenu($event)">
+                      <i class="menu-icon tf-icons bx bx-layout"></i>
+                      <div data-i18n="Layouts">Gestion Clients/Fournisseurs</div>
                     </a>
-                    <ul class="menu-sub" >
-                        <li class="menu-item">
-                            <a routerLink="/clients" routerLinkActive="active" class="menu-link">
-                                <div data-i18n="Without menu">Clients</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a routerLink="/fournisseurs" routerLinkActive="active" class="menu-link">
-                                <div data-i18n="Without navbar">Fournisseurs</div>
-                            </a>
-                        </li>
+                    <ul class="menu-sub">
+                      <li class="menu-item">
+                        <a routerLink="/menu/clients" routerLinkActive="active" class="menu-link">
+                          <div data-i18n="Without menu">Clients</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a routerLink="/menu/fournisseurs" routerLinkActive="active" class="menu-link">
+                          <div data-i18n="Without navbar">Fournisseurs</div>
+                        </a>
+                      </li>
                     </ul>
-                </li>
+                  </li>
+                  
                 <br>
                 <!-- Layouts -->
                 <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle" >
+                    <a href="javascript:void(0);" class="menu-link menu-toggle" (click)="toggleMenu($event)">
                         <i class="menu-icon tf-icons bx bx-layout"></i>
                         <div data-i18n="Layouts">GESTION FINANCIÈRE</div>
                     </a>
-                    <ul class="menu-sub">
+                    <ul class="menu-sub" #dropdown2>
                         <li class="menu-item">
-                            <a routerLink="/paiements" routerLinkActive="active" class="menu-link">
+                            <a routerLink="/menu/paiements" routerLinkActive="active" class="menu-link">
                                 <div data-i18n="Without menu">Paiements</div>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a routerLink="/factures" routerLinkActive="active" class="menu-link">
+                            <a routerLink="/menu/factures" routerLinkActive="active" class="menu-link">
                                 <div data-i18n="Without navbar">Factures</div>
                             </a>
                         </li>
@@ -109,20 +110,20 @@
                 </li>
                 <br>
                 <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle" (click)="toggleMenu($event)">
                         <i class="menu-icon tf-icons bx bx-dock-top"></i>
                         <div data-i18n="Account Settings">GESTION COMMANDE</div>
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a routerLink="/commandes" routerLinkActive="active" class="menu-link">
+                            <a routerLink="/menu/commandes" routerLinkActive="active" class="menu-link">
                                 <div data-i18n="Account">Commandes</div>
                             </a>
                         </li>
                     </ul>
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a routerLink="/commandeItem" routerLinkActive="active" class="menu-link">
+                            <a routerLink="/menu/commandeItem" routerLinkActive="active" class="menu-link">
                                 <div data-i18n="Account">Commande Item</div>
                             </a>
                         </li>
@@ -130,13 +131,13 @@
                 </li>
                 <br>
                 <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle" (click)="toggleMenu($event)">
                         <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                         <div data-i18n="Authentications">GESTION DE LA PRODUCTION</div>
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a routerLink="/production" routerLinkActive="active" class="menu-link">
+                            <a routerLink="/menu/production" routerLinkActive="active" class="menu-link">
                                 <div data-i18n="Basic">Production</div>
                             </a>
                         </li>
@@ -144,18 +145,18 @@
                 </li>
                 <br>
                 <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle" (click)="toggleMenu($event)">
                         <i class="menu-icon tf-icons bx bx-cube-alt"></i>
                         <div data-i18n="Misc">GESTION DES PRODUITS ET STOCKS</div>
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a routerLink="/produits" routerLinkActive="active" class="menu-link">
+                            <a routerLink="/menu/produits" routerLinkActive="active" class="menu-link">
                                 <div data-i18n="Error">Produits</div>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a routerLink="/stock" routerLinkActive="active" class="menu-link">
+                            <a routerLink="/menu/stock" routerLinkActive="active" class="menu-link">
                                 <div data-i18n="Error">Stock</div>
                             </a>
                         </li>
@@ -256,7 +257,7 @@
             <br>
             
             <!-- <div class="content-wrapper"> -->
-            <!-- <router-outlet></router-outlet> -->
+            <router-outlet></router-outlet>
             <!-- </div> -->
         </div>
     </div>

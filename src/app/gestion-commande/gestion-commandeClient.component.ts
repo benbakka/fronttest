@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Client } from '../beans/client';
 import { CommandeClient } from '../beans/commandeClient';
 import { GestionCommandeClientService } from '../service/gestion-commandeClient.service';
@@ -26,13 +26,14 @@ export class GestionCommandeClientComponent implements OnInit {
   isReversed: boolean = false;
   nearbyPagesCount: number = 2;
   newCommandeItem: CommandeItem = new CommandeItem();
-  selectedCommandeItem: any;
+  selectedCommandeItem: CommandeItem | null = null;
   showFields: boolean = false;
   produits: Produit[] = [];
   commandeItems: Array<CommandeItem> = new Array<CommandeItem>();
 
   
-  constructor(private gestionCommandeService: GestionCommandeClientService, private gestionClientService: GestionClientService,private commandeItemSercice: CommandeItemService,private gestionProduitService: GestionProduitService) { }
+  constructor(private gestionCommandeService: GestionCommandeClientService, private gestionClientService: GestionClientService,
+    private commandeItemSercice: CommandeItemService,private gestionProduitService: GestionProduitService,private elementRef: ElementRef) { }
 
   ngOnInit(): void {
     this.getCommandes();
@@ -71,23 +72,7 @@ export class GestionCommandeClientComponent implements OnInit {
   }
 
 
-  updateCommande(): void {
-    if (this.selectedCommande) {
-      this.gestionCommandeService.updateCommande(this.selectedCommande)
-        .subscribe(updatedCommande => {
-          const index = this.commandes.findIndex(c => c.id === updatedCommande.id);
-          if (index !== -1) {
-            this.commandes[index] = updatedCommande;
-          }
-          this.selectedCommande = null;
-          this.updatePagination();
-        });
-    }
-  }
-
-
   CreateCommande(): void {
-    console.log('wanari',this.newCommandeItem)
     this.newCommande.commandeItems=this.commandeItems;
     this.newCommande.statut="en_attente";
     this.gestionCommandeService.createCommande(this.newCommande)
@@ -102,6 +87,45 @@ export class GestionCommandeClientComponent implements OnInit {
     this.newCommande.commandeItems.push(commande);
     this.commandeItems.push(commande);
   }
+
+  
+  updateCommande(): void {
+    if (this.selectedCommande) {
+      // this.selectedCommande.commandeItems = this.commandeItems; // Update items in selected commande
+      this.gestionCommandeService.updateCommande(this.selectedCommande).subscribe(updatedCommande => {
+        const index = this.commandes.findIndex(c => c.id === updatedCommande.id);
+        if (index !== -1) {
+          this.commandes[index] = updatedCommande;
+        }
+        this.selectedCommande = null;
+        this.updatePagination();
+      });
+    }
+  }
+  ajoutCommandeItem(NewcommandeItem:CommandeItem):void {
+    console.log(NewcommandeItem);
+    
+    this.selectedCommande?.commandeItems.push(NewcommandeItem);
+  }
+  updateCommandeItem(): void {
+    if (this.selectedCommandeItem) {
+      this.commandeItemSercice.updateCommande(this.selectedCommandeItem)
+        .subscribe(updatedCommandeItem => {
+          const index = this.commandeItems.findIndex(c => c.id === updatedCommandeItem.id);
+          if (index !== -1) {
+            this.commandeItems[index] = updatedCommandeItem;
+          }
+          this.selectedCommandeItem = null;
+          this.updatePagination();
+        });
+    }
+  }
+  
+  onSelectItem(commande: CommandeItem): void {
+    this.selectedCommandeItem = commande;
+    // this.newCommande = { ...commande };
+  }
+  
 
   deleteCommande(commande: CommandeClient): void {
     this.gestionCommandeService.deleteCommande(commande.id)
@@ -163,6 +187,14 @@ export class GestionCommandeClientComponent implements OnInit {
     }
   }
 
+  deleteItem(commande:CommandeItem):void {
+    this.commandeItemSercice.deleteCommande(commande.id,this.selectedCommande?.client.id).subscribe(()=> {
+      let index = this.selectedCommande?.commandeItems.findIndex((element) => element["id"] == commande.id);
+      this.selectedCommande?.commandeItems.slice(index,1);
+
+    });
+  }
+
 
   getStatusStyle(status: string): any {
     let backgroundColor: string;
@@ -194,5 +226,47 @@ export class GestionCommandeClientComponent implements OnInit {
   toggleFields() {
     this.showFields = !this.showFields;
   }
+
+  @ViewChild('innerModal') innerModalRef!: ElementRef;
+  @ViewChild('outerModal') outerModalRef!: ElementRef;
+
+
+   ngAfterViewInit(): void {
+    const innerModalElement = this.innerModalRef.nativeElement;
+    const outerModalElement = this.outerModalRef.nativeElement;
+
+    // Ensure Bootstrap modal instances
+    const innerModalInstance = new bootstrap.Modal(innerModalElement);
+    const outerModalInstance = new bootstrap.Modal(outerModalElement);
+
+    // When the inner modal is hidden, show the outer modal
+    innerModalElement.addEventListener('hidden.bs.modal', () => {
+      outerModalInstance.show();
+    });
+
+    // Cleanup Bootstrap modal data when either modal is closed
+    innerModalElement.addEventListener('hidden.bs.modal', () => {
+      innerModalInstance.hide();
+      innerModalElement.classList.remove('show');
+      innerModalElement.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+        backdrop.remove();
+      }
+    });
+
+    outerModalElement.addEventListener('hidden.bs.modal', () => {
+      outerModalInstance.hide();
+      outerModalElement.classList.remove('show');
+      outerModalElement.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+        backdrop.remove();
+      }
+    });
+  }
+
  
 }

@@ -8,6 +8,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="d-flex justify-content-end align-items-center search-box">
+
                             <div class="col-md-auto">
                                 <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
                                     data-bs-target="#smallModal">Ajouter Commandes</button>
@@ -26,7 +27,7 @@
                 <thead>
                     <tr>
                         <th>
-                            <a  (click)="reverseCommandes()" title="Reverse Order">
+                            <a (click)="reverseCommandes()" title="Reverse Order">
                                 <i class="material-icons">{{ isReversed ? 'arrow_downward' : 'arrow_upward' }}</i>
                             </a>
                         </th>
@@ -50,10 +51,12 @@
                                 </span>
                             </td>
                             <td>
-                                <a title="Edit" (click)="onSelect(commande)" class="edit" data-bs-toggle="modal" data-bs-target="#editModal"><i class="material-icons">&#xE254;</i></a>
-                                <a (click)="deleteCommande(commande)" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                <a title="Edit" (click)="onSelect(commande)" data-bs-toggle="modal"
+                                    data-bs-target="#outerModal"><i class="material-icons">&#xE254;</i></a>
+                                <a (click)="deleteCommande(commande)" class="delete" title="Delete"
+                                    data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                             </td>
-                            
+
                         </tr>
                     </ng-container>
                 </tbody>
@@ -78,7 +81,7 @@
         </li>
     </ul>
 
-    
+
     <!-- Modal -->
     <div class="modal fade" id="smallModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog " role="document">
@@ -93,21 +96,22 @@
                         <label for="numero">Numéro:</label>
                         <input type="text" id="numero" name="numero" required [(ngModel)]="newCommande.numero">
                     </div>
-            
+
                     <div class="form-group">
                         <label for="client">Client:</label>
                         <select id="client" name="client" required [(ngModel)]="newCommande.client.ref">
-                            <option *ngFor="let client of clients" [value]="client.ref">{{ client.nom }} {{ client.prenom }}</option>
+                            <option *ngFor="let client of clients" [value]="client.ref">{{ client.nom }} {{
+                                client.prenom }}</option>
                         </select>
                     </div>
-            
+
                     <div class="form-group">
                         <label for="dateCommande">Date de Commande:</label>
                         <input type="date" id="dateCommande" name="date" required [(ngModel)]="newCommande.date">
                     </div>
-            
 
-                    <div class="form-group"> 
+
+                    <div class="form-group">
                         <label for="commandeStatus">Statut de Commande:</label>
                         <select id="commandeStatus" name="statut" [(ngModel)]="newCommande.statut">
                             <option value="en_attente">EN ATTENTE</option>
@@ -118,32 +122,37 @@
                     </div>
                     <div class="container mt-5">
                         <!-- Button to toggle visibility -->
-                        <button class="btn btn-primary" (click)="toggleFields()">Show Fields</button>
-                      
+
                         <!-- Fields to be revealed -->
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="produit">Produit:</label>
-                                        <select id="produit" name="produit" class="form-select" required [(ngModel)]="newCommandeItem.produit.reference">
-                                            <option *ngFor="let produit of produits" [ngValue]="produit.reference">{{ produit.reference }}</option>
+                                        <select id="produit" name="produit" class="form-select" required
+                                            [(ngModel)]="newCommandeItem.produit.reference">
+                                            <option *ngFor="let produit of produits" [ngValue]="produit.reference">{{
+                                                produit.reference }}</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="quantite">Nemuro</label>
-                                        <input type="text" id="quantite" name="numero" class="form-control" required [(ngModel)]="newCommandeItem.numero">
+                                        <input type="text" id="quantite" name="numero" class="form-control" required
+                                            [(ngModel)]="newCommandeItem.numero">
                                     </div>
                                     <div class="form-group">
                                         <label for="quantite">Quantité</label>
-                                        <input type="number" id="quantite" name="quantite" class="form-control" required [(ngModel)]="newCommandeItem.quantite">
+                                        <input type="number" id="quantite" name="quantite" class="form-control" required
+                                            [(ngModel)]="newCommandeItem.quantite">
                                     </div>
-                                
+
                                 </div>
-                                
+
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" (click)="AddCommandeIteam(newCommandeItem)" class="btn btn-primary" >Add</button>
+                                    <button type="button" class="btn btn-outline-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="button" (click)="AddCommandeIteam(newCommandeItem)"
+                                        class="btn btn-primary">Add</button>
                                 </div>
 
                                 <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
@@ -152,7 +161,8 @@
                                             <tr>
                                                 <th>
                                                     <a (click)="reverseCommandes()" title="Reverse Order">
-                                                        <i class="material-icons">{{ isReversed ? 'arrow_downward' : 'arrow_upward' }}</i>
+                                                        <i class="material-icons">{{ isReversed ? 'arrow_downward' :
+                                                            'arrow_upward' }}</i>
                                                     </a>
                                                 </th>
                                                 <th>Produit</th>
@@ -162,8 +172,8 @@
                                         <tbody>
                                             <tr *ngFor="let commande of commandeItems">
                                                 <td></td>
-                                                <td>{{ commande.produit.reference }}</td> 
-                                                <td>{{ commande.quantite }}</td> 
+                                                <td>{{ commande.produit.reference }}</td>
+                                                <td>{{ commande.quantite }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -171,62 +181,187 @@
                             </div>
                         </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" (click)="CreateCommande()" class="btn btn-primary"
-                        data-bs-dismiss="modal">Save</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" (click)="CreateCommande()" class="btn btn-primary"
+                            data-bs-dismiss="modal">Save</button>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Edit Client Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true" *ngIf="selectedCommande">
-        <div class="modal-dialog " role="document">
+
+    <div class="modal fade" id="outerModal" tabindex="-1" aria-labelledby="outerModalLabel" aria-hidden="true"
+        #outerModal>
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title">Modifier Fornisseur</h2>
+                    <h4 class="modal-title">Inner Modal Header</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body" *ngIf="selectedCommande">
+                        <div class="form-group">
+                            <label for="numero">Numéro:</label>
+                            <input type="text" id="numero" name="numero" required [(ngModel)]="selectedCommande.numero"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="client">Client:</label>
+                            <select id="client" name="client" required [(ngModel)]="selectedCommande.client.ref"
+                                class="form-select">
+                                <option *ngFor="let client of clients" [value]="client.ref">{{ client.nom }} {{
+                                    client.prenom }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateCommande">Date de Commande:</label>
+                            <input type="date" id="dateCommande" name="date" required
+                                [(ngModel)]="selectedCommande.date" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="commandeStatus">Statut de Commande:</label>
+                            <select id="commandeStatus" name="statut" [(ngModel)]="selectedCommande.statut"
+                                class="form-select">
+                                <option value="en_attente">EN ATTENTE</option>
+                                <option value="livree">LIVREE</option>
+                                <option value="annulee">ANNULEE</option>
+                                <option value="retournee">RETOURNEE</option>
+                            </select>
+                        </div>
+
+                        <div class="container mt-5">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <a (click)="reverseCommandes()" title="Reverse Order">
+                                                                <i class="material-icons">{{ isReversed ?
+                                                                    'arrow_downward' :
+                                                                    'arrow_upward' }}</i>
+                                                            </a>
+                                                        </th>
+                                                        <th style="width: 140px;">Produit</th>
+                                                        <th>Quantité</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let commande of selectedCommande.commandeItems">
+                                                        <td></td>
+                                                        <td>{{ commande.produit.reference }}</td>
+                                                        <td>{{ commande.quantite }}</td>
+                                                        <td>
+                                                            <a title="Edit" (click)="onSelectItem(commande)"
+                                                                data-bs-toggle="modal" data-bs-target="#innerModal"><i
+                                                                    class="material-icons">&#xE254;</i></a>
+                                                            <a (click)="onSelectItem(commande)"
+                                                                (click)="updateCommandeItem()" class="update"
+                                                                title="update" data-bs-toggle="modal"
+                                                                data-bs-target="#updateItemModal"><i
+                                                                    class="material-icons">&#xE872;</i></a>
+                                                                    <!-- <a (click)="deleteItem(commande)"
+                                                                 ><i
+                                                                    class="material-icons">&#xE872;</i></a> -->
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        (click)="updateCommande()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="innerModal" tabindex="-1" aria-labelledby="innerModalLabel" aria-hidden="true"
+        #innerModal>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Inner Modal Header</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ng-container *ngIf="selectedCommandeItem">
+                        <div class="form-group">
+                            <label for="produit">Produit:</label>
+                            <select id="produit" name="produit" class="form-select" required
+                                [(ngModel)]="selectedCommandeItem.produit">
+                                <option *ngFor="let produit of produits" [value]="produit.id">{{ produit.nom }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantite">Quantité:</label>
+                            <input type="number" id="quantite" name="quantite" class="form-control" required
+                                [(ngModel)]="selectedCommandeItem.quantite">
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        (click)="updateCommandeItem()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- updateItemAdd -->
+
+    <div class="modal fade" id="updateItemModal" tabindex="-1" aria-labelledby="innerModalLabel" aria-hidden="true"
+        #updateItemModal>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Inner Modal Header</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="numero">Numéro:</label>
-                        <input type="text" id="numero" name="numero" required [(ngModel)]="selectedCommande.numero">
-                    </div>
-            
-                    <div class="form-group">
-                        <label for="client">Client:</label>
-                        <select id="client" name="client" required [(ngModel)]="newCommande.client">
-                            <option *ngFor="let client of clients" [value]="client.id">{{ client.nom }} {{ client.prenom }}</option>
+                        <label for="produit">Produit:</label>
+                        <select id="produit" name="produit" class="form-select" required
+                            [(ngModel)]="newCommandeItem.produit.reference">
+                            <option *ngFor="let produit of produits" [ngValue]="produit.reference">{{ produit.reference
+                                }}</option>
                         </select>
                     </div>
-            
                     <div class="form-group">
-                        <label for="dateCommande">Date de Commande:</label>
-                        <input type="date" id="dateCommande" name="date" required [(ngModel)]="selectedCommande.date">
+                        <label for="quantite">Nemuro</label>
+                        <input type="text" id="quantite" name="numero" class="form-control" required
+                            [(ngModel)]="newCommandeItem.numero">
                     </div>
-            
-                   
-                    
-                    <div class="form-group"> 
-                        <label for="commandeStatus">Statut de Commande:</label>
-                        <select id="commandeStatus" name="statut" [(ngModel)]="selectedCommande.statut">
-                            <option value="en_attente">EN ATTENTE</option>
-                            <option value="livree">LIVREE</option>
-                            <option value="annulee">ANNULEE</option>
-                            <option value="retournee">RETOURNEE</option>
-                        </select>
+                    <div class="form-group">
+                        <label for="quantite">Quantité</label>
+                        <input type="number" id="quantite" name="quantite" class="form-control" required
+                            [(ngModel)]="newCommandeItem.quantite">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="updateCommande()">Save
-                        changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#outerModal"
+                        (click)="ajoutCommandeItem(newCommandeItem)">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
+
 
 </div>

@@ -24,6 +24,7 @@ export class GestionClientService {
     const url = `${this.apiUrl}/update/${client.id}`;
     return this.http.put<Client>(url, client);
   }
+  
 
   deleteClient(id: number): Observable<void> {
     const url = `${this.apiUrl}/delete/${id}`;
